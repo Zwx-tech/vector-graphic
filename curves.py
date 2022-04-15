@@ -40,11 +40,11 @@ class Vector:
 class Bezier:
 
     def __init__(self, starting_point: Vector, ending_point: Vector, a: Vector, b: Vector):
-        self.start = starting_point #P0
-        self.end = ending_point #P3
-        self.a = a #P1
-        self.b = b #P2
-        self.clicked = False # to change (by using button class)
+        self.start = starting_point  # P0
+        self.end = ending_point  # P3
+        self.a = a  # P1
+        self.b = b  # P2
+        self.clicked = False  # to change (by using button class)
 
     def P(self, t) -> Vector:
         return self.start * (-t**3 + 3*t**2 - 3*t+1) + \
@@ -96,14 +96,19 @@ class Bezier:
 
     def draw(self):
         screen = pygame.display.get_surface()
-        # pygame.draw.line(screen, (255, 255, 255), self.start.v, self.end.v)
 
-        n, k = 1, 100
+        # precision with which the curve is drawn
+        k = 1 / 100
 
-        for i in range(n, k, n):
-            v1, v2 = self.P((i-n) / k), self.P(i / k)
-            print(i, v1.v, v2.v)
+        n = int(10 ** -math.log10(k))
+        k = round(k * n)
+        v1 = self.P(0)
+
+        for i in range(k, n+1, k):
+            v2 = self.P(i / n)
             pygame.draw.line(screen, (255, 255, 255), v1.v, v2.v)
+            v1 = v2
+
 
 class Shape:
 
