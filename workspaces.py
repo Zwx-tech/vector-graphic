@@ -8,7 +8,8 @@ class Workspace(object):
             self,
             size: tuple[int, int],  # (width, height)
             window_size: tuple[int, int],  # (width, height)
-            background_color=(150, 150, 150)
+            background_color=(150, 150, 150),
+            **kwargs
     ):
         self.size = size
         self.window_size = window_size
@@ -17,8 +18,8 @@ class Workspace(object):
         self.background = background_color
         self.objects = []
         self.zoom = .8
-        self.x_offset = 10
-        self.y_offset = 10
+        self.x_offset = kwargs.get('offset', (10, 10))[0]
+        self.y_offset = kwargs.get('offset', (10, 10))[1]
         self.multiplayer = self._calculate_multiplayer()
 
     def add_object(self, obj):

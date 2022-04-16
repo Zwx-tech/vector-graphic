@@ -1,6 +1,6 @@
 from curves import *
 from workspaces import *
-
+from ui import *
 import pygame, os
 from screeninfo import get_monitors
 
@@ -20,7 +20,12 @@ if __name__ == "__main__":
     pygame.display.set_caption("UwUctory")
 
     workspace = Workspace((100, 100), (WIDTH, HEIGHT))
-
+    interface = Interface()
+    interface.add_object(Button(
+        width=100,
+        height=100,
+        pos=Vector(10, 10)
+    ))
     b = Bezier(Vector(0, 50), Vector(40, 75), Vector(50, 25), Vector(70, 50))
     workspace.add_object(b)
 
@@ -51,6 +56,7 @@ if __name__ == "__main__":
 
         screen.fill((0, 0, 0))
         workspace.tick()
+        interface.tick()
         pygame.display.update()
 
         clock.tick(180)
