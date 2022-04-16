@@ -67,7 +67,7 @@ class Workspace(object):
 
     def tick(self):
         t = self.translate_to_pixels(Vector(*self.size)).v
-        pygame.draw.rect(self.screen, self.background, (self.x_offset, self.y_offset, t[0]-self.x_offset, t[1]-self.y_offset), 1)
+        pygame.draw.rect(self.screen, self.background, (self.x_offset, self.y_offset, t[0]-self.x_offset, t[1]-self.y_offset))
 
         for obj in self.objects:
             obj.tick()

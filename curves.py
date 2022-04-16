@@ -49,7 +49,8 @@ class Bezier:
             starting_point: Vector,
             ending_point: Vector,
             a: Vector, b: Vector,
-            workspace=None
+            workspace=None,
+            color=(0, 0, 0)
     ):
         assert isinstance(starting_point, Vector)
         assert isinstance(ending_point, Vector)
@@ -61,6 +62,8 @@ class Bezier:
         self.end = ending_point  # P3
         self.a = a  # P1
         self.b = b  # P2
+
+        self.color = color
 
         self.clicked = False  # to change (by using button class)
         self.n = int(10 ** -math.log10(PRECISION))
@@ -127,7 +130,7 @@ class Bezier:
 
         for i in range(self.k, self.n + 1, self.k):
             v2 = self.workspace.translate_to_pixels(self.P(i / self.n))
-            pygame.draw.line(screen, (255, 255, 255), v1.v, v2.v)
+            pygame.draw.line(screen, self.color, v1.v, v2.v)
             v1 = v2
 
 
