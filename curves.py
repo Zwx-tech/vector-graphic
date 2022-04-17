@@ -52,10 +52,7 @@ class Bezier:
             workspace=None,
             color=(0, 0, 0)
     ):
-        assert isinstance(starting_point, Vector)
-        assert isinstance(ending_point, Vector)
-        assert isinstance(a, Vector)
-        assert isinstance(b, Vector)
+        assert isinstance(starting_point, Vector) and isinstance(ending_point, Vector) and isinstance(a, Vector) and isinstance(b, Vector)
         # assert isinstance(workspace, Workspace) or workspace is None
 
         self.start = starting_point  # P0

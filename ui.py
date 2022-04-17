@@ -12,6 +12,8 @@ class UIElement:
         self.color = kwargs.get('color', (255, 255, 255))
         self.img_path = kwargs.get('img_path', None)
 
+        self.__set_img()
+
     @property
     def clicked(self) -> bool: #returns True if button was clicked
         if pygame.mouse.get_pressed()[0]:
@@ -58,6 +60,7 @@ class Button(UIElement):
 
     def tick(self):
         pass
+
 class Frame(UIElement):
 
     def __init__(self, *args, **kwargs):
