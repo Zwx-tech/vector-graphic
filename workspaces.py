@@ -131,5 +131,3 @@ class Workspace(object):
         for obj in self.objects:
             obj.tick()
             obj.draw()
-
-        self.navigation.tick()
