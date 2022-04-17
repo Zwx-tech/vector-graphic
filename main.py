@@ -33,7 +33,9 @@ if __name__ == "__main__":
     OUTLINE_COLOR = tuple(map(int, colors['outline'].replace(",", "")[1:-1].split()))
     LINE_COLOR = tuple(map(int, colors['outline'].replace(",", "")[1:-1].split()))
     # set up workspace and interface object
-    workspace = Workspace((100, 100), (WIDTH, HEIGHT))
+    nav = Navigation()
+    workspace = Workspace((100, 100), (WIDTH, HEIGHT), nav)
+    workspace.add_object(Bezier(Vector(0, 50), Vector(40, 75), Vector(50, 25), Vector(70, 50)))
     interface = Interface()
     interface.add_object(Button(
         width=100,
