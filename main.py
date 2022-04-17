@@ -33,7 +33,9 @@ if __name__ == "__main__":
     OUTLINE_COLOR = tuple(map(int, colors['outline'].replace(",", "")[1:-1].split()))
     LINE_COLOR = tuple(map(int, colors['outline'].replace(",", "")[1:-1].split()))
     # set up workspace and interface object
-    workspace = Workspace((100, 100), (WIDTH, HEIGHT))
+    nav = Navigation()
+    workspace = Workspace((100, 100), (WIDTH, HEIGHT), nav)
+
     interface = Interface()
     interface.add_object(Button(
         width=100,
@@ -42,8 +44,7 @@ if __name__ == "__main__":
         img_path=""
     ))
     # TEMP add test object to workspace
-    b = Bezier(Vector(0, 50), Vector(40, 75), Vector(50, 25), Vector(70, 50))
-    workspace.add_object(b)
+    workspace.add_object(Bezier(Vector(0, 50), Vector(40, 75), Vector(50, 25), Vector(70, 50)))
     clock = pygame.time.Clock() # clock to control FPS
     while True:
         for event in pygame.event.get():
@@ -55,9 +56,9 @@ if __name__ == "__main__":
             # zoom handle is temporary here
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:
-                    workspace.zoom_in()
+                    nav.zoom_in()
                 elif event.button == 5:
-                    workspace.zoom_out()
+                    nav.zoom_out()
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
@@ -72,6 +73,7 @@ if __name__ == "__main__":
         screen.fill(BG_COLOR)
         workspace.tick()
         interface.tick()
+        nav.tick()
         pygame.display.update()
 
         clock.tick(180)

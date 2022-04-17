@@ -63,7 +63,7 @@ class Bezier:
         self.color = color
 
         self.clicked = False  # to change (by using button class)
-        self.n = int(10 ** -math.log10(PRECISION))
+        self.n = round(10 ** -math.log10(PRECISION))
         self.k = round(PRECISION * self.n)
 
         if workspace is not None:
