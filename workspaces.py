@@ -86,8 +86,8 @@ class Workspace(object):
         self.static_y_offset = 10
         self.factor = self._calculate_factor()
 
-        self.x_offset = self.static_x_offset - (size[0] - ((size[0] - self.static_x_offset) // 2) - self.window_size[0]//2) // 10
-        self.y_offset = self.static_y_offset - (size[1] - ((size[1] - self.static_y_offset) // 2) - self.window_size[1]//2) // 10
+        self.x_offset = self.static_x_offset - (size[0] - ((size[0] - self.static_x_offset) // 2) - self.window_size[0] // 2) // 10
+        self.y_offset = self.static_y_offset - (size[1] - ((size[1] - self.static_y_offset) // 2) - self.window_size[1] // 2) // 10
 
         self.navigation: Navigation
         navigation.add_workspace(self)
@@ -106,24 +106,24 @@ class Workspace(object):
         """Translates units to pixels. Specifies where vector should be on the pygame screen"""
 
         if (x is not None) and (y is not None):
-            return round(self.factor * self.navigation.zoom * x + self.x_offset + self.static_x_offset), \
-                   round(self.factor * self.navigation.zoom * y + self.y_offset + self.static_y_offset)
+            return round(self.factor * self.navigation.zoom * x + self.x_offset + self.static_x_offset * self.navigation.zoom), \
+                   round(self.factor * self.navigation.zoom * y + self.y_offset + self.static_y_offset * self.navigation.zoom)
 
         return Vector(
-            round((self.factor * self.navigation.zoom * vector.x) + self.x_offset + self.static_x_offset),
-            round((self.factor * self.navigation.zoom * vector.y) + self.y_offset + self.static_y_offset)
+            round((self.factor * self.navigation.zoom * vector.x) + self.x_offset + self.static_x_offset * self.navigation.zoom),
+            round((self.factor * self.navigation.zoom * vector.y) + self.y_offset + self.static_y_offset * self.navigation.zoom)
         )
 
     def translate_to_units(self, vector: Vector = None, x=None, y=None) -> Vector or tuple[int, int]:
         """Translates pixels to units. Specifies where pixel should be on workspace"""
 
         if (x is not None) and (y is not None):
-            return (x - self.x_offset - self.static_x_offset) / self.factor / self.navigation.zoom, \
-                   (y - self.y_offset - self.static_y_offset) / self.factor / self.navigation.zoom
+            return (x - self.x_offset - self.static_x_offset * self.navigation.zoom) / self.factor / self.navigation.zoom, \
+                   (y - self.y_offset - self.static_y_offset * self.navigation.zoom) / self.factor / self.navigation.zoom
 
         return Vector(
-            (vector.x - self.x_offset - self.static_x_offset) / self.factor / self.navigation.zoom,
-            (vector.y - self.y_offset - self.static_y_offset) / self.factor / self.navigation.zoom
+            (vector.x - self.x_offset - self.static_x_offset * self.navigation.zoom) / self.factor / self.navigation.zoom,
+            (vector.y - self.y_offset - self.static_y_offset * self.navigation.zoom) / self.factor / self.navigation.zoom
         )
 
     def tick(self):
@@ -131,8 +131,8 @@ class Workspace(object):
         t = self.translate_to_pixels(Vector(*self.size)).v
         pygame.draw.rect(
             self.screen, self.background,
-            (self.x_offset + self.static_x_offset, self.y_offset + self.static_y_offset,
-             t[0]-self.x_offset-self.static_x_offset, t[1]-self.y_offset-self.static_y_offset)
+            (self.x_offset + self.static_x_offset * self.navigation.zoom, self.y_offset + self.static_y_offset * self.navigation.zoom,
+             t[0]-self.x_offset-self.static_x_offset * self.navigation.zoom, t[1]-self.y_offset-self.static_y_offset * self.navigation.zoom)
         )
 
         for obj in self.objects:
