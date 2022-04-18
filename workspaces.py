@@ -66,6 +66,8 @@ class Navigation(object):
         else:
             self.moving = None
 
+        # tutaj daj to do zoomowania
+        # ~ nie
 
 class Workspace(object):
     def __init__(

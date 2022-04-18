@@ -41,7 +41,7 @@ if __name__ == "__main__":
         width=100,
         height=100,
         pos=Vector(10, 10),
-        img_path=""
+        img_path=os.path.join(os.getcwd(), "icons", "curve.png")
     ))
     # TEMP add test object to workspace
     workspace.add_object(Bezier(Vector(0, 50), Vector(40, 75), Vector(50, 25), Vector(70, 50)))

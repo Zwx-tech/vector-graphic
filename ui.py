@@ -11,8 +11,8 @@ class UIElement:
         self.height = height
         self.color = kwargs.get('color', (255, 255, 255))
         self.img_path = kwargs.get('img_path', None)
+        self.img = None
         self.padding = kwargs.get('padding', (20, 20))
-
         self.__set_img()
 
     @property
