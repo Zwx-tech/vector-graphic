@@ -7,7 +7,7 @@ class Navigation(object):
     def __init__(self, workspaces: list = []):
         self.workspaces = workspaces
         self.zoom = .5
-        self.moving = None
+        self.moving = None # False statement is more accurate
 
     def add_workspace(self, workspace):
         assert isinstance(workspace, Workspace)
@@ -53,6 +53,13 @@ class Navigation(object):
             workspace.x_offset = self.moving[0][0] + (pygame.mouse.get_pos()[0] - self.moving[1][0])
             workspace.y_offset = self.moving[0][1] + (pygame.mouse.get_pos()[1] - self.moving[1][1])
 
+    def process_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4:
+                self.zoom_in()
+            elif event.button == 5:
+                self.zoom_out()
+
     def tick(self):
         if pygame.mouse.get_pressed()[1]:
             self.move()
@@ -82,7 +89,7 @@ class Workspace(object):
         self.x_offset = self.static_x_offset - (size[0] - ((size[0] - self.static_x_offset) // 2) - self.window_size[0]//2) // 10
         self.y_offset = self.static_y_offset - (size[1] - ((size[1] - self.static_y_offset) // 2) - self.window_size[1]//2) // 10
 
-        self.navigation: Navigation = None
+        self.navigation: Navigation
         navigation.add_workspace(self)
 
     def add_object(self, obj):
@@ -131,5 +138,3 @@ class Workspace(object):
         for obj in self.objects:
             obj.tick()
             obj.draw()
-
-        self.navigation.tick()
